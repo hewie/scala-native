@@ -8,6 +8,7 @@ import scalanative.posix.sys.stat.{uid_t, gid_t}
 object unistd {
 
   type off_t = CLongLong
+  type pid_t = CInt
 
   def sleep(seconds: CUnsignedInt): CInt                          = extern
   def usleep(usecs: CUnsignedInt): CInt                           = extern
@@ -22,6 +23,10 @@ object unistd {
   def lseek(fildes: CInt, offset: off_t, whence: CInt): off_t     = extern
   def ftruncate(fildes: CInt, length: off_t): CInt                = extern
   def truncate(path: CString, length: off_t): CInt                = extern
+  def fork(): pid_t                                               = extern
+
+  def execve(path: CString, argv: Ptr[CString], envp: Ptr[CString]): CInt = extern
+  def execvp(path: CString, argv: Ptr[CString]): CInt = extern
 
   @name("scalanative_stdin_fileno")
   def STDIN_FILENO: CInt = extern
@@ -55,5 +60,8 @@ object unistd {
 
   @name("scalanative_environ")
   def environ: Ptr[CString] = extern
+
+  @name("scalanative_environ_set")
+  def environ_=(env: Ptr[CString]): Unit = extern
 
 }

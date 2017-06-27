@@ -2,11 +2,11 @@ package scala.scalanative.runtime
 
 import scala.scalanative.native.{CString, _}
 
-class NullTerminatedArray[E] private(val array: Ptr[Ptr[E]]) extends AnyVal {
+class NullTerminatedArray[E](val array: Ptr[Ptr[E]]) extends AnyVal {
 }
 
 object NullTerminatedArray {
-  def apply[E](array: scala.Array[Ptr[E]])(implicit z: Zone): NullTerminatedArray[E] = {
+  def apply[E](array: Seq[Ptr[E]])(implicit z: Zone): NullTerminatedArray[E] = {
     //FIXME use this when #783 is fixed
     // this.apply(array, identity[Ptr[E]])
 
@@ -20,7 +20,7 @@ object NullTerminatedArray {
     new NullTerminatedArray(result)
   }
 
-  def apply[E,I](array: scala.Array[I], transform: I => Ptr[E])(implicit z: Zone): NullTerminatedArray[E] = {
+  def apply[E,I](array: Seq[I], transform: I => Ptr[E])(implicit z: Zone): NullTerminatedArray[E] = {
 
     val result: Ptr[Ptr[E]] = z.alloc((array.length + 1) * sizeof[Ptr[Ptr[E]]]).asInstanceOf[Ptr[Ptr[E]]]
 

@@ -1,7 +1,5 @@
 package java.lang
 
-import java.lang.Long
-import java.lang.Boolean
 import java.util.List
 import java.util.Map
 import java.io.{File, IOException}

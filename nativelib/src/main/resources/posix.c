@@ -167,3 +167,5 @@ int scalanative_ewouldblock() { return EWOULDBLOCK; }
 int scalanative_exdev() { return EXDEV; }
 
 char **scalanative_environ() { return environ; }
+
+void scalanative_environ_set(char **env) { environ = env; }
